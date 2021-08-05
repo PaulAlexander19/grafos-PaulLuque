@@ -18,6 +18,39 @@ public class Vertex {
         links = new ArrayList<Arc>();
     }
 
-    
+    @Override
+    public boolean equals(Object obj) {
+        Vertex other = (Vertex) obj;
+        return (this.name.equals(other.name));
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getNumVertex() {
+        return this.numVertex;
+    }
+
+    public void setNumVertex(int numVertex) {
+        this.numVertex = numVertex;
+    }
+
+    public ArrayList<Arc> getLinks() {
+        return this.links;
+    }
+
+    public void setLinks(ArrayList<Arc> links) {
+        this.links = links;
+    }
+
+    @Override
+    public String toString() {
+        return "Arc: (" + this.name + ")";
+    }
 
 }
