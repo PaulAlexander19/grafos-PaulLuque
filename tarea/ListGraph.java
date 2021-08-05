@@ -40,12 +40,18 @@ public class ListGraph {
     }
 
     // Crea un nuevo vértice
-    public void newVertex(String name) {
+    public void newVertex(String name) throws Exception{
+        if(numVertes >= maxVertes) {
+            throw new Exception("Grafo lleno");
+        }
+
         boolean existe = positionVertex(name) >= 0;
         if (!existe) {
             Vertex v = new Vertex(name);
             v.asigPosition(numVertes);
             arrVertes[numVertes++] = v;
+        }else{
+            throw new Exception("El Vertice existe");
         }
     }
 
