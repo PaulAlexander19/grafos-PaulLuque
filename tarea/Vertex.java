@@ -18,6 +18,11 @@ public class Vertex {
         links = new ArrayList<Arc>();
     }
 
+    // Indica el número que identificará este vértice
+    public void asigPosition(int n) {
+        numVertex = n;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Vertex other = (Vertex) obj;

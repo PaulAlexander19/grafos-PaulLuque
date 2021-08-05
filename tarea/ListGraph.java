@@ -39,4 +39,14 @@ public class ListGraph {
         return (i < numVertes) ? i : -1;
     }
 
+    // Crea un nuevo vértice
+    public void newVertex(String name) {
+        boolean existe = positionVertex(name) >= 0;
+        if (!existe) {
+            Vertex v = new Vertex(name);
+            v.asigPosition(numVertes);
+            arrVertes[numVertes++] = v;
+        }
+    }
+
 }
