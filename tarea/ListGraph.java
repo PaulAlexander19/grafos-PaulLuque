@@ -27,4 +27,16 @@ public class ListGraph {
         return arrVertes[v].getLinks();
     }
 
+    // Busca y devuelve la posicion del vértice, si no lo encuentra regresa -1
+    public int positionVertex(String name) {
+        int i = -1;
+        for (; (i < numVertes);) {
+            i++;
+            if (arrVertes[i].getName().equals(name)) {
+                break;
+            }
+        }
+        return (i < numVertes) ? i : -1;
+    }
+
 }
