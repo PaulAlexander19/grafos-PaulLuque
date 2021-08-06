@@ -40,8 +40,8 @@ public class ListGraph {
     }
 
     // Crea un nuevo vértice
-    public void newVertex(String name) throws Exception{
-        if(numVertes >= maxVertes) {
+    public void newVertex(String name) throws Exception {
+        if (numVertes >= maxVertes) {
             throw new Exception("Grafo lleno");
         }
 
@@ -50,9 +50,57 @@ public class ListGraph {
             Vertex v = new Vertex(name);
             v.asigPosition(numVertes);
             arrVertes[numVertes++] = v;
-        }else{
+        } else {
             throw new Exception("El Vertice existe");
         }
+    }
+
+    // Comprueba si dos vertices son adyacentes
+    public boolean adyacente(String a, String b) throws Exception {
+        int v1, v2;
+        v1 = numVertice(a);
+        v2 = numVertice(b);
+        if (v1 < 0 || v2 < 0) {
+            throw new Exception("El vértice no existe");
+        }
+        if (tablAdc[v1].lad.contains(new Arco(v2))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Comprueba si dos vertices son adyacentes por el número de vértice
+    private boolean adyacente(int v1, int v2) throws Exception {
+        if (tablAdc[v1].lad.contains(new Arco(v2))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Crea un nuevo arco
+    public void nuevoArco(String a, String b) throws Exception {
+        if (!adyacente(a, b)) {
+            int v1 = numVertice(a);
+            int v2 = numVertice(b);
+            if (v1 < 0 || v2 < 0) {
+                throw new Exception("El vértice no existe");
+            }
+            Arco ab = new Arco(v2);
+            tablAdc[v1].lad.addFirst(ab);
+        }
+    }
+
+    // borra un arco ya creado
+    public void borrarArco(String a, String b) throws Exception {
+        int v1 = numVertice(a);
+        int v2 = numVertice(b);
+        if (v1 < 0 || v2 < 0) {
+            throw new Exception("El vértice no existe");
+        }
+        Arco ab = new Arco(v2);
+        tablAdc[v1].lad.remove(ab);
     }
 
 }
