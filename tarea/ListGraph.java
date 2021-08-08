@@ -10,7 +10,8 @@ public class ListGraph<E> {
     }
 
     // regesa la lista de adyacentes de nodo en la posicion v
-    public ArrayList<Arc<E>> getLinks(Vertex<E> v) throws Exception {
+    public ArrayList<Arc<E>> getLinks(E a) throws Exception {
+        Vertex<E> v = getVertex(a);
         if (!arrVertes.contains(v)) {
             throw new Exception("Vértice no existe");
         }
@@ -19,7 +20,7 @@ public class ListGraph<E> {
     }
 
     // Busca y devuelve la posicion del vértice, si no lo encuentra regresa -1
-    public Vertex<E> getVertex(E name) {
+    private Vertex<E> getVertex(E name) {
 
         for (Vertex<E> vertex : arrVertes) {
             if (vertex.getData().equals(name)) {
@@ -60,9 +61,8 @@ public class ListGraph<E> {
         return false;
     }
 
-
     // Crea un nuevo arco
-    public void nuevoArco(E a, E b) throws Exception {
+    public void newArco(E a, E b) throws Exception {
         Vertex<E> v1 = getVertex(a);
         Vertex<E> v2 = getVertex(b);
 
