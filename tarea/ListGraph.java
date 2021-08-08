@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class ListGraph<E> {
     private int numVertes; // el numero de verices actuales
@@ -7,6 +9,26 @@ public class ListGraph<E> {
     public ListGraph() {
         this.numVertes = 0;
         arrVertes = new ArrayList<Vertex<E>>();
+    }
+
+    // BFS
+
+    public void bfs(E v) {
+        Vertex<E> v1 = getVertex(v);
+        Queue<Vertex<E>> queue = new LinkedList<Vertex<E>>();
+        queue.add(v1);
+        v1.visitar();
+
+        while (!queue.isEmpty()) {
+            Vertex<E> v2 = queue.poll();
+            System.out.print(v2.getData() + " - ");
+            for (Arc<E> enlace : v2.getLinks()) {
+                if (!enlace.getDestino().isVisited()) {
+                    enlace.getDestino().visitar();
+                    queue.add(enlace.getDestino());
+                }
+            }
+        }
     }
 
     // regesa la lista de adyacentes de nodo en la posicion v
@@ -76,9 +98,9 @@ public class ListGraph<E> {
         Arc<E> enlace = new Arc<E>(v2);
         v1.getLinks().add(enlace);
 
-        // // no dirigido
-        // Arc<E> enlace2 = new Arc<E>(v1);
-        // v1.getLinks().add(enlace2);
+        // no dirigido
+        Arc<E> enlace2 = new Arc<E>(v1);
+        v2.getLinks().add(enlace2);
 
     }
 
@@ -96,9 +118,9 @@ public class ListGraph<E> {
         Arc<E> enlace = new Arc<E>(v2, peso);
         v1.getLinks().add(enlace);
 
-        // // no dirigido
-        // Arc<E> enlace2 = new Arc<E>(v1, peso);
-        // v1.getLinks().add(enlace2);
+        // no dirigido
+        Arc<E> enlace2 = new Arc<E>(v1, peso);
+        v2.getLinks().add(enlace2);
 
     }
 
@@ -107,9 +129,11 @@ public class ListGraph<E> {
         Vertex<E> v1 = getVertex(a);
         Vertex<E> v2 = getVertex(b);
         Arc<E> temEnlace = getEnlace(a, b);
+        Arc<E> temEnlace2 = getEnlace(b, a); // no dirigido
 
         if (v1.getLinks().contains(temEnlace)) {
             v1.getLinks().remove(temEnlace);
+            v2.getLinks().remove(temEnlace2); // no dirigido
         } else {
             throw new Exception("Enlace no existe");
         }
