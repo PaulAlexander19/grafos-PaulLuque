@@ -1,25 +1,29 @@
 // sera para enlazar a otros vertices
-public class Arc {
-    private int positionNext; // posicion del nodo siguiente
-    private double weight;
+public class Arc<E> {
+    private E refVertice;
+    private double peso; // posicion del nodo siguiente
 
-    public Arc(int destino) {
-        positionNext = destino;
+    public Arc(E destino) {
+        refVertice = destino;
     }
 
-    public Arc(int destino, double weight) {
-        positionNext = destino;
-        this.weight = weight;
+    public Arc(E destino, double weight) {
+        refVertice = destino;
+        peso = weight;
     }
 
-    public int getDestino() {
-        return positionNext;
+    public E getDestino() {
+        return refVertice;
+    }
+
+    public double getPeso() {
+        return peso;
     }
 
     @Override
     public boolean equals(Object obj) {
         Arc other = (Arc) obj;
-        return (this.positionNext == other.positionNext && this.weight == other.weight);
+        return (this.refVertice.equals(other.refVertice) && this.peso == other.peso);
     }
 
 }
