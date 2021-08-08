@@ -132,8 +132,18 @@ public class ListGraph<E> {
 
     private void setUnvisited() {
         for (Vertex<E> vertex : arrVertes) {
-            vertex.unvisited();
+            vertex.unVisited();
         }
+    }
+
+    @Override
+    public String toString() {
+        String text = "";
+        for (Vertex<E> vertex : arrVertes) {
+            text += vertex.toString() + "\n";
+        }
+
+        return text;
     }
 
 }

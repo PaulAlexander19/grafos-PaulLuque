@@ -26,4 +26,9 @@ public class Arc<E> {
         return (this.refVertice.equals(other.refVertice) && this.peso == other.peso);
     }
 
+    @Override
+    public String toString() {
+        return refVertice.getData().toString();
+    }
+
 }

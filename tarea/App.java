@@ -13,5 +13,6 @@ public class App {
         System.out.println(g.isAdyacente("Arequipa", "Lima"));
         System.out.println(g.isAdyacente("Puno", "Lima"));
         
+        System.out.println(g);
     }
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Vertex<E> {
     E data; // Sera lo que lo representa, puede ser cualquier cosa
     ArrayList<Arc<E>> links; // enlaces del vertice
-    boolean visited;
+    boolean visited; // si esta visitado
 
     public Vertex(E data) {
         this.data = data;
@@ -37,11 +37,23 @@ public class Vertex<E> {
 
     @Override
     public String toString() {
-        return "(" + this.data + ")";
+        String text = "(" + this.data + ") -> ";
+        for (Arc<E> arc : links) {
+            text += arc.toString() + ", ";
+        }
+        return text;
     }
 
-    public void unvisited(){
+    public void unVisited() {
         this.visited = false;
+    }
+
+    public void visitar() {
+        this.visited = true;
+    }
+
+    public boolean isVisited() {
+        return visited;
     }
 
 }
