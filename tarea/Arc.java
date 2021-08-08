@@ -1,18 +1,18 @@
 // sera para enlazar a otros vertices
 public class Arc<E> {
-    private E refVertice;
+    private Vertex<E> refVertice;
     private double peso; // posicion del nodo siguiente
 
-    public Arc(E destino) {
+    public Arc(Vertex<E> destino) {
         refVertice = destino;
     }
 
-    public Arc(E destino, double weight) {
+    public Arc(Vertex<E> destino, double weight) {
         refVertice = destino;
         peso = weight;
     }
 
-    public E getDestino() {
+    public Vertex<E> getDestino() {
         return refVertice;
     }
 
