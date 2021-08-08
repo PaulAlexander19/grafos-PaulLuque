@@ -130,4 +130,10 @@ public class ListGraph<E> {
         return null;
     }
 
+    private void setUnvisited() {
+        for (Vertex<E> vertex : arrVertes) {
+            vertex.unvisited();
+        }
+    }
+
 }

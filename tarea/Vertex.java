@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class Vertex<E> {
     E data; // Sera lo que lo representa, puede ser cualquier cosa
     ArrayList<Arc<E>> links; // enlaces del vertice
+    boolean visited;
 
     public Vertex(E data) {
         this.data = data;
         links = new ArrayList<Arc<E>>();
+        visited = false;
     }
 
     @Override
@@ -36,6 +38,10 @@ public class Vertex<E> {
     @Override
     public String toString() {
         return "(" + this.data + ")";
+    }
+
+    public void unvisited(){
+        this.visited = false;
     }
 
 }
