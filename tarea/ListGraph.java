@@ -1,106 +1,133 @@
 import java.util.ArrayList;
 
-public class ListGraph {
-    private static final int MAX = 100000; // numero maximo de vertices
+public class ListGraph<E> {
     private int numVertes; // el numero de verices actuales
-    private int maxVertes; // el nuemro maximo de vertices
-    Vertex[] arrVertes; // el arreglo de los vertices
+    ArrayList<Vertex<E>> arrVertes; // el arreglo de los vertices
 
     public ListGraph() {
-        this(MAX);
-    }
-
-    public ListGraph(int maxVertes) {
-        this.maxVertes = maxVertes;
         this.numVertes = 0;
-        arrVertes = new Vertex[maxVertes];
+        arrVertes = new ArrayList<Vertex<E>>();
     }
 
     // regesa la lista de adyacentes de nodo en la posicion v
-    public ArrayList<Arc> getLinks(int v) throws Exception {
-        if (v < 0 || v >= numVertes) {
-            throw new Exception("Vértice fuera de rango");
-        } else if (arrVertes[v] == null) {
+    public ArrayList<Arc<E>> getLinks(Vertex<E> v) throws Exception {
+        if (!arrVertes.contains(v)) {
             throw new Exception("Vértice no existe");
         }
-
-        return arrVertes[v].getLinks();
+        int pos = arrVertes.indexOf(v);
+        return arrVertes.get(pos).getLinks();
     }
 
     // Busca y devuelve la posicion del vértice, si no lo encuentra regresa -1
-    public int positionVertex(String name) {
-        int i = -1;
-        for (; (i < numVertes);) {
-            i++;
-            if (arrVertes[i].getName().equals(name)) {
-                break;
+    public Vertex<E> getVertex(E name) {
+
+        for (Vertex<E> vertex : arrVertes) {
+            if (vertex.getData().equals(name)) {
+                return vertex;
             }
         }
-        return (i < numVertes) ? i : -1;
+
+        return null;
     }
 
     // Crea un nuevo vértice
-    public void newVertex(String name) throws Exception {
-        if (numVertes >= maxVertes) {
-            throw new Exception("Grafo lleno");
-        }
+    public void newVertex(E name) throws Exception {
 
-        boolean existe = positionVertex(name) >= 0;
-        if (!existe) {
-            Vertex v = new Vertex(name);
-            v.asigPosition(numVertes);
-            arrVertes[numVertes++] = v;
+        Vertex<E> existe = getVertex(name);
+
+        if (existe == null) {
+            Vertex<E> v = new Vertex<E>(name);
+            arrVertes.add(v);
         } else {
             throw new Exception("El Vertice existe");
         }
     }
 
     // Comprueba si dos vertices son adyacentes
-    public boolean adyacente(String a, String b) throws Exception {
-        int v1, v2;
-        v1 = numVertice(a);
-        v2 = numVertice(b);
-        if (v1 < 0 || v2 < 0) {
+    public boolean isAdyacente(E a, E b) throws Exception {
+        Vertex<E> v1 = getVertex(a);
+        Vertex<E> v2 = getVertex(b);
+        if (v1 == null || v2 == null) {
             throw new Exception("El vértice no existe");
         }
-        if (tablAdc[v1].lad.contains(new Arco(v2))) {
-            return true;
-        } else {
-            return false;
+
+        for (Arc<E> arc : v1.getLinks()) {
+            if (arc.getDestino().equals(v2)) {
+                return true;
+            }
         }
+
+        return false;
     }
 
-    // Comprueba si dos vertices son adyacentes por el número de vértice
-    private boolean adyacente(int v1, int v2) throws Exception {
-        if (tablAdc[v1].lad.contains(new Arco(v2))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     // Crea un nuevo arco
-    public void nuevoArco(String a, String b) throws Exception {
-        if (!adyacente(a, b)) {
-            int v1 = numVertice(a);
-            int v2 = numVertice(b);
-            if (v1 < 0 || v2 < 0) {
-                throw new Exception("El vértice no existe");
-            }
-            Arco ab = new Arco(v2);
-            tablAdc[v1].lad.addFirst(ab);
+    public void nuevoArco(E a, E b) throws Exception {
+        Vertex<E> v1 = getVertex(a);
+        Vertex<E> v2 = getVertex(b);
+
+        if (v1 == null || v2 == null) {
+            throw new Exception("El vértice no existe");
         }
+
+        if (isAdyacente(a, b)) {
+            throw new Exception("Ya existe el enlace");
+        }
+        Arc<E> enlace = new Arc<E>(v2);
+        v1.getLinks().add(enlace);
+
+        // // no dirigido
+        // Arc<E> enlace2 = new Arc<E>(v1);
+        // v1.getLinks().add(enlace2);
+
+    }
+
+    public void nuevoArco(E a, E b, double peso) throws Exception {
+        Vertex<E> v1 = getVertex(a);
+        Vertex<E> v2 = getVertex(b);
+
+        if (v1 == null || v2 == null) {
+            throw new Exception("El vértice no existe");
+        }
+
+        if (isAdyacente(a, b)) {
+            throw new Exception("Ya existe el enlace");
+        }
+        Arc<E> enlace = new Arc<E>(v2, peso);
+        v1.getLinks().add(enlace);
+
+        // // no dirigido
+        // Arc<E> enlace2 = new Arc<E>(v1, peso);
+        // v1.getLinks().add(enlace2);
+
     }
 
     // borra un arco ya creado
-    public void borrarArco(String a, String b) throws Exception {
-        int v1 = numVertice(a);
-        int v2 = numVertice(b);
-        if (v1 < 0 || v2 < 0) {
+    public void borrarEnlace(E a, E b) throws Exception {
+        Vertex<E> v1 = getVertex(a);
+        Vertex<E> v2 = getVertex(b);
+        Arc<E> temEnlace = getEnlace(a, b);
+
+        if (v1.getLinks().contains(temEnlace)) {
+            v1.getLinks().remove(temEnlace);
+        } else {
+            throw new Exception("Enlace no existe");
+        }
+
+    }
+
+    private Arc<E> getEnlace(E a, E b) throws Exception {
+        Vertex<E> v1 = getVertex(a);
+        Vertex<E> v2 = getVertex(b);
+        if (v1 == null || v2 == null) {
             throw new Exception("El vértice no existe");
         }
-        Arco ab = new Arco(v2);
-        tablAdc[v1].lad.remove(ab);
+        for (Arc<E> enlace : getVertex(a).getLinks()) {
+            if (enlace.getDestino().equals(v2)) {
+                return enlace;
+            }
+        }
+        return null;
     }
 
 }
