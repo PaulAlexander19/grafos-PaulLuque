@@ -2,34 +2,34 @@ import java.util.ArrayList;
 
 // clase de los vertices 
 
-public class Vertex<T> {
-    T data; // Sera lo que lo representa, puede ser cualquier cosa
-    ArrayList<Arc<T>> links; // enlaces del vertice
+public class Vertex<E> {
+    E data; // Sera lo que lo representa, puede ser cualquier cosa
+    ArrayList<Arc<E>> links; // enlaces del vertice
 
-    public Vertex(T data) {
+    public Vertex(E data) {
         this.data = data;
-        links = new ArrayList<Arc<T>>();
+        links = new ArrayList<Arc<E>>();
     }
 
     @Override
     public boolean equals(Object obj) {
-        Vertex<T> other = (Vertex<T>) obj;
+        Vertex<E> other = (Vertex<E>) obj;
         return (this.data.equals(other.data) && (links.equals(other.links)));
     }
 
-    public T getData() {
+    public E getData() {
         return this.data;
     }
 
-    public void setData(T data) {
+    public void setData(E data) {
         this.data = data;
     }
 
-    public ArrayList<Arc<T>> getLinks() {
+    public ArrayList<Arc<E>> getLinks() {
         return this.links;
     }
 
-    public void setLinks(ArrayList<Arc<T>> links) {
+    public void setLinks(ArrayList<Arc<E>> links) {
         this.links = links;
     }
 
