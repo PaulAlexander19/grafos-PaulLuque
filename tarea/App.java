@@ -20,9 +20,12 @@ public class App {
         // System.out.println(g.isAdyacente("Puno", "Arequipa"));
         // System.out.println(g.isAdyacente("Arequipa", "Lima"));
         // System.out.println(g.isAdyacente("Puno", "Lima"));
-        
+
         System.out.println(g);
-        g.bfs("2");
+        g.bfs("0");
+        System.out.println("----------");
+        g.setUnvisited();
+        g.dfs("0");
         // g.borrarEnlace("4", "2");
         // System.out.println(g);
 

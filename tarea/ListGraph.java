@@ -31,6 +31,20 @@ public class ListGraph<E> {
         }
     }
 
+    // DFS
+
+    public void dfs(E e) {
+        Vertex<E> v = getVertex(e);
+        v.visitar();
+        System.out.print(v.getData() + " - ");
+
+        for (Arc<E> enlace : v.getLinks()) {
+            if (!enlace.getDestino().isVisited()) {
+                dfs(enlace.getDestino().getData());
+            }
+        }
+    }
+
     // regesa la lista de adyacentes de nodo en la posicion v
     public ArrayList<Arc<E>> getLinks(E a) throws Exception {
         Vertex<E> v = getVertex(a);
@@ -154,7 +168,7 @@ public class ListGraph<E> {
         return null;
     }
 
-    private void setUnvisited() {
+    public void setUnvisited() {
         for (Vertex<E> vertex : arrVertes) {
             vertex.unVisited();
         }
